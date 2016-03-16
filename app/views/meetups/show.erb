@@ -1,0 +1,43 @@
+<h1> <%= @meetup.name %> </h1>
+
+<h4>Summary:</h4>
+<p>
+  When: <%= @meetup.when %>
+</p>
+
+<p>
+  Where: <%= @meetup.location %>
+</p>
+
+<p>
+  <%= @meetup.details %>
+</p>
+
+<p>
+  Created by <%= @meetup.owner.username %>
+</p>
+
+<h4>Who else is going?</h4>
+
+<% if !current_user.nil? and !current_user.is_going?(@meetup) %>
+  <a class= "button" href="/meetups/<%= @meetup.id %>/join">Join!</a>
+<% elsif current_user.nil? %>
+  <a class= "button" href="/auth/github?redir=<%= @meetup.id %>">Sign in to join!</a>
+<% else %>
+  <a class="button" href="#">You're going!</a>
+  <a class="button" href="/meetups/<%= @meetup.id %>/leave">leave?</a>
+<% end %>
+
+
+<table>
+<% @attendents.each do |attendent| %>
+  <tr>
+    <td>
+      <%= attendent.username %>
+    </td>
+    <td>
+      <img src="<%= attendent.avatar_url %>" alt="Get your mouse off my face" />
+    </td>
+  </tr>
+<% end %>
+</table>
